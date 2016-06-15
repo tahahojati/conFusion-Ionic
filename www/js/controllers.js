@@ -83,11 +83,12 @@ angular.module('conFusion.controllers', [])
   };
 
   $ionicPlatform.ready(function(){
-      Camera = {};
-      Camera.DestinationType={DATA_URL: 1};
-      Camera.PictureSourceType= {CAMERA:2};
-      Camera.EncodingType={JPEG:3};
-      CameraPopoverOptions=1;
+    //Uncomment the lines below to be able to preview the project in the browser.
+      // Camera = {};
+      // Camera.DestinationType={DATA_URL: 1};
+      // Camera.PictureSourceType= {CAMERA:2};
+      // Camera.EncodingType={JPEG:3};
+      // CameraPopoverOptions=1;
     console.log($cordovaCamera);
     var options = {
       quality: 50,
@@ -358,7 +359,7 @@ angular.module('conFusion.controllers', [])
 
 }])
 
-.controller('FavoritesController', ['$scope', 'dishes', 'favorites', 'favoriteFactory', 'baseURL', '$ionicListDelegate', '$ionicPopup', '$ionicLoading', '$timeout', function($scope, dishes, favorites, favoriteFactory, baseURL, $ionicListDelegate, $ionicPopup, $ionicLoading, $timeout) {
+.controller('FavoritesController', ['$cordovaVibration', '$scope', 'dishes', 'favorites', 'favoriteFactory', 'baseURL', '$ionicListDelegate', '$ionicPopup', '$ionicLoading', '$timeout', function($cordovaVibration, $scope, dishes, favorites, favoriteFactory, baseURL, $ionicListDelegate, $ionicPopup, $ionicLoading, $timeout) {
   $scope.baseURL = baseURL;
   $scope.shouldShowDelete = false;
   $ionicLoading.show({
@@ -369,15 +370,6 @@ angular.module('conFusion.controllers', [])
   $timeout(function() {
     $ionicLoading.hide();
   }, 1000);
-  // menuFactory.query(
-  //   function (response) {
-  //           $scope.dishes = response;
-  //       },
-  //       function (response) {
-  //           $scope.message = "Error: " + response.status + " " + response.statusText;
-  //       }
-  // );
-
   console.log($scope.dishes, $scope.favorites);
 
   $scope.toggleDelete = function() {
@@ -393,6 +385,7 @@ angular.module('conFusion.controllers', [])
       if (res) {
         console.log('Ok to delete');
         favoriteFactory.deleteFromFavorites(index);
+        $cordovaVibration.vibrate(600);
       } else {
         console.log('Canceled delete');
       }
