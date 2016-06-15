@@ -1,0 +1,39 @@
+<ion-modal-view>
+  <ion-header-bar>
+    <h1 class="title">Reserve Table</h1>
+    <div class="buttons">
+      <button class="button button-clear" ng-click="closeComment()">Close</button>
+    </div>
+  </ion-header-bar>
+  <ion-content ng-controller="DishCommentController">
+
+    <form class="list" name="commentForm" ng-submit="submitComment()" novalidate>
+      <div class="item item-select">
+        <label for="rating" class="input-label" >
+          Rating
+        </label>
+        <select name="rating" ng-options="rating for rating in [5,4,3,2,1]" ng-model="mycomment.rating"> </select>
+      </div>
+
+      <div class="item item-input" ng-class="{'has-error' : commentForm.name.$dirty && commentForm.name.$error.required}">
+        <label for="name" class="input-label">
+          Your Name
+        </label>
+          <input class="form-control" type="text" name="name" id="name" placeholder="Enter Your Name" ng-model="mycomment.author" required>
+      </div>
+
+      <div class="item item-input " ng-class="{'has-error' : commentForm.comments.$dirty && commentForm.comments.$error.required}">
+        <label for="comments" class="input-label">
+          Your Comments
+        </label>
+          <textarea name="comments" class="form-control" rows="2" ng-model="mycomment.comment" required> </textarea>
+      </div>
+      <div class="item">
+          <input type="submit" name="submit" value="Submit Comments" class="button button-positive" ng-disabled="commentForm.$invalid">
+      </div>
+    </form>
+
+
+
+  </ion-content>
+</ion-modal-view>

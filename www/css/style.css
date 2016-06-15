@@ -1,0 +1,14 @@
+/* Empty. Add your own CSS if you like */
+/*.popover {
+  height: 9em;
+}*/
+
+
+.popover {
+  height: auto !important;
+}
+
+.popover ion-content {
+  top: 0;
+  position: relative;
+}
