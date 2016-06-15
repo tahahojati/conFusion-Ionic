@@ -236,7 +236,7 @@ angular.module('conFusion.controllers', [])
   };
 }])
 
-.controller('DishDetailController', ['baseURL', '$scope', '$stateParams', 'dish', 'menuFactory', '$ionicPopover', 'favoriteFactory', '$ionicModal', function(baseURL, $scope, $stateParams, dish, menuFactory, $ionicPopover, favoriteFactory, $ionicModal) {
+.controller('DishDetailController', ['$ionicPlatform','$cordovaLocalNotification','$cordovaToast', 'baseURL', '$scope', '$stateParams', 'dish', 'menuFactory', '$ionicPopover', 'favoriteFactory', '$ionicModal', function($ionicPlatform, $cordovaLocalNotification, $cordovaToast, baseURL, $scope, $stateParams, dish, menuFactory, $ionicPopover, favoriteFactory, $ionicModal) {
   $scope.baseURL = baseURL;
   $scope.dish = {};
   $scope.showDish = false;
@@ -272,6 +272,26 @@ angular.module('conFusion.controllers', [])
   $scope.addFavorite = function(id) {
     favoriteFactory.addToFavorites(id);
     $scope.popover.hide;
+    $ionicPlatform.ready(function() {
+      $cordovaLocalNotification.schedule({
+        id: 1,
+        title: "Added Favorite",
+        text: $scope.dish.name,
+      }).then(function(res) {
+          console.log('Added Favorite ' + $scope.dish.name);
+        },
+        function(res) {
+          console.log('Failed to add Favorite ');
+        });
+
+      $cordovaToast.show('Added Favorite ' + $scope.dish.name, 'long', 'center')
+        .then(function(res) {
+
+          },
+          function(res) {
+
+          });
+    });
     console.log(id);
   }
   $scope.addComment = function(id) {
